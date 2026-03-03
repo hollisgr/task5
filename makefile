@@ -6,11 +6,14 @@ MOCK := github.com/stretchr/testify/mock
 
 all: build run
 
-build:
+build: clean
 	go build -o $(EXEC) $(SRC)
 
 run:
 	./$(EXEC)
+
+clean:
+	rm -f $(EXEC)
 
 mod:
 	go mod init $(EXEC)

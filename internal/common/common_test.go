@@ -1,4 +1,4 @@
-package service
+package common
 
 import (
 	"errors"
@@ -82,7 +82,7 @@ func TestSquare(t *testing.T) {
 
 func TestTimeToString(t *testing.T) {
 	test := time.Date(2025, 12, 1, 0, 0, 0, 0, time.UTC)
-	exp := "1-12-2025"
+	exp := "01-12-2025"
 	res := TimeToString(test)
 	assert.Equal(t, exp, res)
 }

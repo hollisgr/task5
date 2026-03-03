@@ -3,6 +3,8 @@ package service
 import (
 	"errors"
 	"testing"
+	"testing/quick"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -53,5 +55,34 @@ func TestBasicMap(t *testing.T) {
 	}
 
 	res := BasicMap(input)
+	assert.Equal(t, exp, res)
+}
+
+func TestBasicSumQuick(t *testing.T) {
+	f := func(a int, b int) bool {
+		res := BasicSum(a, b)
+		if res != (a + b) {
+			return false
+		}
+		return true
+	}
+
+	err := quick.Check(f, &quick.Config{MaxCount: 10})
+	assert.NoError(t, err)
+}
+
+func TestSquare(t *testing.T) {
+	t.Run("default_test", func(t *testing.T) {
+		input := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+		exp := []int{1, 4, 9, 16, 25, 36, 49, 64, 81, 100}
+		res := Square(input)
+		assert.Equal(t, exp, res)
+	})
+}
+
+func TestTimeToString(t *testing.T) {
+	test := time.Date(2025, 12, 1, 0, 0, 0, 0, time.UTC)
+	exp := "1-12-2025"
+	res := TimeToString(test)
 	assert.Equal(t, exp, res)
 }

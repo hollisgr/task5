@@ -1,6 +1,11 @@
 package service
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+	"sync"
+	"time"
+)
 
 type Service struct{}
 
@@ -41,4 +46,28 @@ func BasicMap(input map[string]int) map[string]int {
 		}
 	}
 	return res
+}
+
+// Square takes a slice of integers and returns a new slice with their squares,
+// processing each element concurrently using goroutines.
+func Square(input []int) []int {
+	len := len(input)
+	res := make([]int, len)
+	wg := sync.WaitGroup{}
+	for i, num := range input {
+		wg.Add(1)
+		go func(i int, num int) {
+			defer wg.Done()
+			res[i] = num * num
+		}(i, num)
+	}
+	wg.Wait()
+	return res
+}
+
+func TimeToString(t time.Time) string {
+	day := t.Day()
+	mon := t.Month()
+	year := t.Year()
+	return fmt.Sprintf("%d-%d-%d", day, mon, year)
 }

@@ -43,5 +43,5 @@ func (s *Service) Load(ctx context.Context, id int) (model.Movie, error) {
 		return model.Movie{}, model.ErrNotFound
 	}
 
-	return s.db[id], nil
+	return s.db[id-1], nil
 }
